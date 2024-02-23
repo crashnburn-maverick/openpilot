@@ -51,11 +51,14 @@ class CarInterface(CarInterfaceBase):
     if Params().get("DongleId", encoding='utf8') in ("4fde83db16dc0802", "112e4d6e0cad05e1", "e36b272d5679115f", "24574459dd7fb3e0", "83a4e056c7072678"):
       ret.spFlags |= FordFlagsSP.SP_ENHANCED_LAT_CONTROL.value
 
+    # We have tested these values with CAN-FD Ford. This can be included for all vehicles after
+    # we have validated that CAN (Q3) Ford users also enjoy these changes.
+    # This prevents massive amounts of brake pumping when coming to a stop.
     ret.longitudinalTuning.kpBP = [0.]
     ret.longitudinalTuning.kpV = [0.5]
     ret.longitudinalTuning.kiV = [0.]
     ret.longitudinalTuning.deadzoneBP = [0., 9.]
-    ret.longitudinalTuning.deadzoneV = [.0, .20]
+    ret.longitudinalTuning.deadzoneV = [.0, .2]
 
     # Auto Transmission: 0x732 ECU or Gear_Shift_by_Wire_FD1
     found_ecus = [fw.ecu for fw in car_fw]
